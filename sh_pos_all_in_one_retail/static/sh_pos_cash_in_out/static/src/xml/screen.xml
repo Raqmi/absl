@@ -6,13 +6,13 @@
         	<t t-if="env.pos.cash_in_out_receipt or env.pos.cash_in_out_statement_receipt">
         		<div class="button next" t-att-class="{ highlight: !locked }"
                      t-on-click="receiptDone">
-                     Close <i class="fa fa-times" aria-hidden="true"></i>
+                     Cierre <i class="fa fa-times" aria-hidden="true"></i>
                  </div>
         	</t>
         	<t t-else="">
         		<div class="button next" t-att-class="{ highlight: !locked }"
                      t-on-click="orderDone">
-                     New Order <i class="fa fa-angle-double-right"></i>
+                     Nuevo pedido <i class="fa fa-angle-double-right"></i>
                  </div>
         	</t>
         </xpath>
@@ -40,7 +40,7 @@
 	                 	<t t-esc="env.pos.company.name" /><br/>
 	    			</t>
 	            	<t t-if="env.pos.company.phone">
-	            		Phone : <t t-esc="env.pos.company.phone"/><br/>
+	            		Telefono : <t t-esc="env.pos.company.phone"/><br/>
 	            	</t>
 	            	<t t-if="env.pos.company.email">
 	            		Email : <t t-esc="env.pos.company.email"/>
@@ -49,7 +49,7 @@
     		</t>
     		<t t-if="env.pos.user and env.pos.user.name">
     			<div class="pos-receipt-contact">
-    				User : <t t-esc="env.pos.user.name"/>
+    				Usuario : <t t-esc="env.pos.user.name"/>
     			</div>
     		</t>
     		
@@ -60,10 +60,10 @@
             	<table class="sh_in_out_statement_table">
             		<thead>
             			<tr>
-            				<th style="width: 23%;">Reason</th>
-            				<th style="width: 25%;">Credit</th>
-            				<th style="width: 25%;">Debit</th>
-            				<th style="width: 27%;">Date</th>
+            				<th style="width: 23%;">Motivo</th>
+            				<th style="width: 25%;">Credito</th>
+            				<th style="width: 25%;">Debito</th>
+            				<th style="width: 27%;">Fecha</th>
             			</tr>
             		</thead>
             		<tbody>
@@ -120,7 +120,7 @@
        			<div class="sh_cash_in_out_receipt_signature">
        			</div>
        			<div class="sh_signature_lbl">
-       				Signature
+       				Firma
        			</div>
        		</t>
     	</div>
@@ -134,7 +134,7 @@
        			</div>
        			<div class="sh_company_phone">
        				<span class="sh_company_phone_lbl">
-       					Phone :
+       					Telefono :
        				</span>
        				<span class="sh_company_phone_data">
        					<t t-esc="env.pos.company.phone"/>
@@ -144,7 +144,7 @@
        		<t t-if="env.pos.get_cashier() and env.pos.get_cashier().name">
        			<div class="sh_cashier_name">
        				<span class="sh_cashier_name_lbl">
-       					Cashier :
+       					Cajero :
        				</span>
        				<span class="sh_cashier_name_data">
        					<t t-esc="env.pos.get_cashier().name"/>
@@ -154,14 +154,14 @@
        		<t t-if="env.pos.cash_in_out_options">
        			<div class="sh_cash_in_operation">
        				<span class="sh_cash_in_operation_lbl">
-       					Operation :
+       					Operacion :
        				</span>
        				<span class="sh_cash_in_operation_data">
        					<t t-if="env.pos.cash_in_out_options == 'cash_in'">
-       						Put Money In
+       						Ingreso Efec
        					</t>
        					<t t-elif="env.pos.cash_in_out_options == 'cash_out'">
-       						Put Money Out
+       						Retiro Efec
        					</t>
        				</span>
        			</div>
@@ -170,7 +170,7 @@
        			<t t-if="env.pos.get('selectedData').reason">
        				<div class="sh_cash_in_out_purpose">
        					<span class="sh_cash_in_out_purpose_lbl">
-       						Purpose :
+       						Proposito :
        					</span>
        					<span class="sh_cash_in_out_purpose_data">
        						<t t-esc="env.pos.get('selectedData').reason"/>
@@ -180,7 +180,7 @@
        			<t t-if="env.pos.get('selectedData').amount">
        				<div class="sh_cash_in_out_amount">
        					<span class="sh_cash_in_out_amount_lbl">
-       						Amount :
+       						Monto :
        					</span>
        					<span class="sh_cash_in_out_amount_data">
        						<t t-esc="env.pos.get('selectedData').amount"/>
@@ -192,7 +192,7 @@
        			<div class="sh_cash_in_out_receipt_signature">
        			</div>
        			<div class="sh_signature_lbl">
-       				Signature
+       				Firma
        			</div>
        		</t>
         </div>

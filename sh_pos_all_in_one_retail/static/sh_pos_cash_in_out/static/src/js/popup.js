@@ -9,10 +9,22 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
         constructor() {
             super(...arguments);
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         click_cash_in_button(){
         	var self = this;
         	self.env.pos.cash_in_out_options = "cash_in"
-        	let { confirmed, payload } = this.showPopup("CashInOutPopupWidget");
+            //Validacion de ingreso
+            let { confirmed, payload } = this.showPopup("CashInOutPopupWidget");
+
             if (confirmed) {
             } else {
                 return;
@@ -43,6 +55,16 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     CashInOutOptionPopupWidget.template = "CashInOutOptionPopupWidget";
     Registries.Component.add(CashInOutOptionPopupWidget);
     
@@ -120,9 +142,9 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
                     }
                 }
             }else if(!reason){
-            	alert("Please Enter Reason.")
+            	alert("Por favor ingresa la razon.")
             }else if(!amount){
-            	alert("Please Enter Amount.")
+            	alert("Por favor ingresa el monto.")
             }
         	
         }
@@ -144,6 +166,20 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
             }
         }
     	
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     	async validate(){
     		var self = this
     		var closing_balance_line = []
@@ -160,12 +196,12 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
     				self.env.pos.db.save("closing_balance", closing_balance_line);
     			});
     			const { confirmed } = await this.showPopup('ShConfirmPopup', {
-                    title: 'Confirmation',
-                    body: "Do you want to close session ?",
+                    title: 'Abarrotes San Luis',
+                    body: "Quieres cerrar la sesion ?",
                 });
                 if (!confirmed) return;
     		}else{
-    			alert("Please enter line for closing balance.")
+    			alert("Atencion.")
     		}
     		
     	}
@@ -250,6 +286,9 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
             });
     	}
     }
+    
+    
+    
     SetClosingVBalancePopupWidget.template = "SetClosingVBalancePopupWidget";
     Registries.Component.add(SetClosingVBalancePopupWidget);
     
@@ -283,6 +322,14 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
     		
     		
     	}
+        
+        
+        
+        
+        
+        
+        
+        
     	async pos_session_close(){
     		var self = this;
     		var total_amount = 0.00
@@ -356,27 +403,43 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
     	                method: "search_read",
     	            })
     	            .then(function (all_cash_in_out_statement) {
+                        
     	            	self.env.pos.db.all_cash_in_out_statement_id = [];
     	            	if(all_cash_in_out_statement && all_cash_in_out_statement.length > 0){
+                            
+                            
+                            
+                            // ========================== Limitacion del reporte por sesion actual =====================
+                            alert('Aqui se limita el reporte de la sesion actual');
+
+                            
     	                	_.each(all_cash_in_out_statement, function(each_cash_in_out_statement){
-    	                		if(self.env.pos.pos_session && self.env.pos.pos_session.id && each_cash_in_out_statement.sh_session && each_cash_in_out_statement.sh_session[0] && each_cash_in_out_statement.sh_session[0] == self.env.pos.pos_session.id){
+    	                		if(self.env.pos.pos_session && self.env.pos.pos_session.id && each_cash_in_out_statement.sh_session && each_cash_in_out_statement.sh_session[0] && 
+                                   each_cash_in_out_statement.sh_session[0] == self.env.pos.pos_session.id){
     	                			self.env.pos.db.all_cash_in_out_statement_id.push(each_cash_in_out_statement.id)
     	                		}
     	                	});
+                            
+                            // ========================== Limitacion del reporte por sesion actual =====================
+                            
+                            
     	                }
-    	            	if(self.env.pos.db.all_cash_in_out_statement_id && self.env.pos.db.all_cash_in_out_statement_id.length > 0){
+
+                        if(self.env.pos.db.all_cash_in_out_statement_id && self.env.pos.db.all_cash_in_out_statement_id.length > 0){                                                        
     	            		self.env.pos.do_action('sh_pos_all_in_one_retail.sh_pos_cash_in_out_report', {
     	                        additional_context: {
     	                            active_ids: self.env.pos.db.all_cash_in_out_statement_id,
     	                        },
     	                    });
+                            
     	            	}else{
-    	            		alert("No Any Cash In / Cash Out Statement for this Session.")
+    	            		alert("Sin movimientos de efectivo.")
     	            	}
     	            });
     				this.trigger("close-popup");
     			}else if(statementValue == 'current_session' && statementPrintValue == 'receipt'){
-    				
+    				                            alert('No tienes permiso para recibos');
+
     				if(self.env.pos.db.all_cash_in_out_statement && self.env.pos.db.all_cash_in_out_statement.length > 0){
     					self.env.pos.db.display_cash_in_out_statement = [];
     					_.each(self.env.pos.db.all_cash_in_out_statement, function(each_cash_in_out_statement){
@@ -391,14 +454,20 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
     						self.env.pos.cash_in_out_statement_receipt = true;
         					self.showScreen("ReceiptScreen");
     					}else{
-    						alert("No Any Cash In / Cash Out Statement avilable for this session.")
+    						alert("No hay movimientos en esta sesion.")
     					}
     					
     				}else{
-	            		alert("No Any Cash In / Cash Out Statement avilable.")
+	            		alert("Sin movimientos a reportar.")
 	            	}
     				this.trigger("close-popup");
     			}else if(statementValue == 'date_wise' && statementPrintValue == 'pdf'){
+                    
+                /* ==================  Limitacion impresion de reporte ======================*/
+                /* ==================  Limitacion impresion de reporte ======================*/
+                /* ==================  Limitacion impresion de reporte ======================*/
+                alert('Aqui se limita la reimpresion de recibos');
+                                            
     				
     				if($('.start_date').val() && $('.end_date').val()){
     					if($('.start_date').val() > $('.end_date').val()){
@@ -430,18 +499,30 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
     	    	            		self.trigger("close-popup");
     	    	            		
     	    	            	}else{
-    	    	            		alert("No Cash In / Out Statement Between Given Date.")
+    	    	            		alert("No hay registros entre esas fechas.")
     	    	            	}
     	    	            });
         					
     					}
     				}else{
-    					alert("Enter Start Date or End Date.")
+    					alert("Ingresa rango de fecha")
     				}
+                    
+                /* ==================  Limitacion impresion de reporte ======================*/
+                /* ==================  Limitacion impresion de reporte ======================*/
+                /* ==================  Limitacion impresion de reporte ======================*/
+                    
+                    
+                    
     			}else if(statementValue == 'date_wise' && statementPrintValue == 'receipt'){
     				if($('.start_date').val() && $('.end_date').val()){
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        alert('Aqui se limita la reimpresion por fecha');
+                        
     					if($('.start_date').val() > $('.end_date').val()){
-    						alert("Start Date must be less than End Date.")
+    						alert("La fecha de inicio debe ser anterior a la de termino.")
     					}else{
     						var start_date = $('.start_date').val() + " 00:00:00"
         					var end_date = $('.end_date').val() + " 24:00:00"
@@ -456,7 +537,7 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
             						self.env.pos.cash_in_out_statement_receipt = true;
                 					self.showScreen("ReceiptScreen");
             					}else{
-            						alert("No Cash In / Out Statement Between Given Date.")
+            						alert("No hay registros entre esas fechas.")
             					}
             					this.trigger("close-popup");
             					
@@ -464,8 +545,14 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
         	            		alert("No Any Cash In / Cash Out Statement avilable.")
         	            	}
     					}
+                        
+                        
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        /* ==================  Limitacion impresion de recibos ======================*/
+                        
     				}else{
-    					alert("Enter Start Date or End Date.")
+    					alert("Ingresa rango de fecha.")
     				}
     			}
     		}
