@@ -1,12 +1,12 @@
 # Part of Softhealer Technologies.
 {
-    "name": "Point of Sale Retail Shop| POS Retail Shop| All In One POS Retail| POS All In One| Point of sales All In One| POS Resposnive| POS Order History| POS Order List| POS Bundle| POS Signature| POS Keyboard Shortcut| POS Direct Login",
-    "author": "Softhealer Technologies",
-    "website": "https://www.softhealer.com",
-    "support": "support@softhealer.com",
+    "name": "Operacion Retail Grupo San Luis",
+    "author": "Sinergia Asesores",
+    "website": "https://www.sinergia-e.com",
+    "support": "soporte@sinergia-e.com",
     "category": "Point of Sale",
-    "summary": "cash in cash out own customer discount mass update product tags own product template auto validate pos quick print receipt import pos secondary product suggestion pos access right pos auto lock cancel whatsapp return exchange pos all feature Odoo",
-    "description": """ This is the fully retail solution for any kind of retail shop or bussiness.  """,
+    "summary": "Funciones para operacion retail en Abarrotes San Luis",
+    "description": """ Modulos Retail.  """,
     "version": "14.0.4",
     "depends": ["base", "web", "utm", "point_of_sale", "hr", "portal", "pos_hr", 'sale'],
     "application": True,
