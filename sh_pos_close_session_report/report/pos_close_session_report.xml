@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="close_session_report_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="docs" t-as="c">
+                    <div class="page">
+                        <t t-set="in_out" t-value="False" />
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-12" style="line-height: 2;">
+                                <span style="font-size: 28px;" t-esc="'Session Summary:' + c.name" />
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-12">
+                                <table class="table" style="margin: 0rem;">
+                                    <thead>
+                                        <tr style="text-align: center; border-bottom: 2px solid #000;">
+                                            <th><span style="font-size: 14px; font-weight: bold;">Responsible</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">Point of Sale</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">Opening Date</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">Closing Dates</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">Number Of Order</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">First Order</span></th>
+                                            <th><span style="font-size: 14px; font-weight: bold;">Last Order</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="text-align: center;">
+                                            <td><span style="font-size: 14px;" t-field="c.user_id" /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.config_id" /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.start_at" t-options='{"widget":"date"}' /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.stop_at" t-options='{"widget":"date"}' /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.ticket_num" /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.first_ticket" /></td>
+                                            <td><span style="font-size: 14px;" t-field="c.last_ticket" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-12">
+                                <table class="table" style="margin: 0rem;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: none; font-size: 20px; font-weight: bold;">Payment Summary:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="total_sale" t-value="0" />
+                                        <t t-set="total_cash_sale" t-value="0" />
+                                        <t t-foreach="c.statement_ids" t-as="p">
+                                            <t t-if="p.journal_id.type == 'cash'">
+                                                <t t-set="in_out" t-value="p.line_ids.filtered(lambda io: io.cash_in_out in ('cash_in', 'cash_out'))" />
+                                            </t>
+                                            <tr>
+                                                <t>
+                                                    <td><span style="font-size: 14px;" t-field="p.journal_id" /> </td>
+                                                    <t t-if="p.journal_id.type == 'cash'">
+                                                        <t t-set="total_cash_sale" t-value="0.0" />
+                                                        <t t-foreach="p.line_ids" t-as="ioc">
+                                                            <t t-if="not ioc.cash_in_out">
+                                                                <t t-set="total_cash_sale" t-value="total_cash_sale + ioc.amount" />
+                                                            </t>
+                                                        </t>
+                                                        <t t-set="total_sale" t-value="total_sale + total_cash_sale" />
+                                                        <td class="text-right"><span style="font-size: 14px;" t-esc="total_cash_sale" t-options='{"widget": "monetary", "display_currency": c.currency_id}' /></td>
+                                                    </t>
+                                                    <t t-if="p.journal_id.type != 'cash'">
+                                                        <t t-set="total_sale" t-value="total_sale + p.total_entry_encoding" />
+                                                        <td class="text-right"><span style="font-size: 14px;" t-field="p.total_entry_encoding" /></td>
+                                                    </t>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                        <!-- End foreach -->
+                                        <tr>
+                                            <td style="text-align: left;"><span style="font-size: 20px; font-weight: bold;">Total Payment Received:</span></td>
+                                            <td style="text-align: right;">
+                                                <span style="font-size: 20px; font-weight: bold;"><t t-esc="total_sale" t-options='{"widget": "monetary", "display_currency": c.currency_id}' /></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left;"><span style="font-size: 14px; font-weight: bold;">Total Discount:</span></td>
+                                            <td style="text-align: right;"><span style="font-size: 14px; font-weight: bold;" t-field="c.total_disc" t-options='{"widget": "monetary", "display_currency": c.currency_id}'></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-6" />
+                            <!-- for margin -->
+                            <div class="col-6">
+                                <p style="padding: 0px 8px; font-size: 20px; font-weight: bold;">TAX Summary:</p>
+                                <table class="table" style="margin: 0rem;">
+                                    <thead>
+                                        <tr>
+                                            <th>TAX Type</th>
+                                            <th>BASE</th>
+                                            <th class="text-right">TAX</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <span t-set="total_base" t-value="0" />
+                                        <span t-set="total_tax" t-value="0" />
+                                        <tr t-foreach="c.summary_by_tax()" t-as="i">
+                                            <td><span t-esc="i.get('name')" /></td>
+                                            <td><span t-esc="'%.2f'%i.get('base')" /><t t-set="total_base" t-value="total_base + i.get('base')" /></td>
+                                            <td class="text-right"><span t-esc="'%.2f'%i.get('total')" /><t t-set="total_tax" t-value="total_tax + i.get('total')" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td style="font-size: 14px; font-weight: bold;"><span t-esc="'%.2f'%total_base" /></td>
+                                            <td class="text-right" style="font-size: 14px; font-weight: bold;"><span t-esc="'%.2f'%total_tax" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-12">
+                                <p style="padding: 0px 8px; font-size: 20px; font-weight: bold;">Cash Control:</p>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 16px; font-weight: bold;">Opening balance:</td>
+                                            <td class="text-right" style="font-size: 16px; font-weight: bold;"><span t-field="c.cash_register_balance_start" /></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-foreach="c.statement_ids" t-as="p">
+                                                <t t-if="p.journal_id.type == 'cash'">
+                                                    <t t-if="p.line_ids">
+                                                        <span t-set="total_cash_sale" t-value="0" />
+                                                        <t t-foreach="p.line_ids" t-as="ioc">
+                                                            <t t-if="not ioc.cash_in_out">
+                                                                <t t-set="total_cash_sale" t-value="total_cash_sale + ioc.amount" />
+                                                            </t>
+                                                        </t>
+                                                        <t t-if="total_cash_sale">
+                                                            <td style="font-size: 16px;">+Sales</td>
+                                                            <td class="text-right" style="font-size: 16px;">
+                                                                <t t-esc="total_cash_sale" t-options='{"widget": "monetary", "display_currency": c.currency_id}' />
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                        <t t-foreach="c.statement_ids" t-as="o">
+                                            <t t-if="o.journal_id.type == 'cash'">
+                                                <span t-set="total_cash_amount" t-value="0" />
+                                                <tr t-foreach="o.line_ids" t-as="line">
+                                                    <t t-if="line.cash_in_out">
+                                                        <td>
+                                                            <t t-if="line.amount &gt;= 0 ">+</t>
+                                                            <t t-if="line.amount &lt; 0 ">-</t>
+                                                            <span t-field="line.name" />
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span t-field="line.amount" />
+                                                        </td>
+                                                    </t>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-12">
+                                <table class="table">
+                                    <tbody>
+                                        <tr style="">
+                                            <td style="border-top: none; font-size: 16px; font-weight: bold;">Theoretical Closing Balance:</td>
+                                            <td class="text-right" style="border-top: none; font-size: 16px; font-weight: bold;"><span t-field="c.cash_register_balance_end" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 16px;">Real Closing Balance:</td>
+                                            <td class="text-right" style="font-size: 16px;"><span t-field="c.cash_register_balance_end_real" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 16px; font-weight: bold;">Difference</td>
+                                            <td class="text-right" style="font-size: 16px; font-weight: bold;"><span t-field="c.cash_real_difference" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="row" style="margin: 0px;" t-if="in_out">
+                            <div class="col-12">
+                                <p style="padding: 0px 8px; font-size: 20px; font-weight: bold;">Cash In/Out Movement:</p>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size: 16px; font-weight: bold;">Description</th>
+                                            <th class="text-right" style="font-size: 16px; font-weight: bold;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="c.statement_ids" t-as="cas">
+                                            <t t-if="cas.journal_id.type == 'cash'">
+                                                <t t-if="cas.line_ids">
+                                                    <span t-set="total_cash_sale" t-value="0" />
+                                                    <t t-foreach="cas.line_ids" t-as="ioc">
+                                                        <t t-if="ioc.cash_in_out">
+                                                            <tr>
+                                                                <td><span t-field="ioc.name" /></td>
+                                                                <td class="text-right">
+                                                                    <span t-field="ioc.amount" />
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="pos_close_session" model="ir.actions.report">
+        <field name="name">Close Session Detail</field>
+        <field name="model">pos.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sh_pos_close_session_report.close_session_report_doc</field>
+        <field name="report_file">ssh_pos_close_session_report.close_session_report_doc</field>
+        <field name="binding_model_id" ref="model_pos_session" />
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'pos_close_session_ ' + time.strftime('%Y-%m-%d')</field>
+    </record>
+</odoo>

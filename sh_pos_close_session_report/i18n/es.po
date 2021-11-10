@@ -1,0 +1,189 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_pos_close_session_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-20 05:34+0000\n"
+"PO-Revision-Date: 2021-09-20 05:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_pos_close_session_report
+#: model:ir.actions.report,print_report_name:sh_pos_close_session_report.pos_close_session
+msgid "'pos_close_session_ ' + time.strftime('%Y-%m-%d')"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "+Sales"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Closing Dates</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">First Order</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Last Order</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Number Of Order</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Opening Date</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Point of Sale</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Responsible</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "<span style=\"font-size: 14px; font-weight: bold;\">Total Discount:</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid ""
+"<span style=\"font-size: 20px; font-weight: bold;\">Total Payment "
+"Received:</span>"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Amount"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "BASE"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model,name:sh_pos_close_session_report.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Cash Control:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields.selection,name:sh_pos_close_session_report.selection__account_bank_statement_line__cash_in_out__cash_in
+msgid "Cash In"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields,field_description:sh_pos_close_session_report.field_account_bank_statement_line__cash_in_out
+msgid "Cash In/Out"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Cash In/Out Movement:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields.selection,name:sh_pos_close_session_report.selection__account_bank_statement_line__cash_in_out__cash_out
+msgid "Cash Out"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.actions.report,name:sh_pos_close_session_report.pos_close_session
+msgid "Close Session Detail"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Description"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Difference"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields,field_description:sh_pos_close_session_report.field_pos_session__first_ticket
+msgid "First Ticket"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields,field_description:sh_pos_close_session_report.field_pos_session__last_ticket
+msgid "Last Ticket"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Opening balance:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Payment Summary:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model,name:sh_pos_close_session_report.model_pos_session
+msgid "Point of Sale Session"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Real Closing Balance:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "TAX"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "TAX Summary:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "TAX Type"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Theoretical Closing Balance:"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields,field_description:sh_pos_close_session_report.field_pos_session__ticket_num
+msgid "Ticket No"
+msgstr ""
+
+#. module: sh_pos_close_session_report
+#: model:ir.model.fields,field_description:sh_pos_close_session_report.field_pos_session__total_disc
+#: model_terms:ir.ui.view,arch_db:sh_pos_close_session_report.close_session_report_doc
+msgid "Total"
+msgstr ""
