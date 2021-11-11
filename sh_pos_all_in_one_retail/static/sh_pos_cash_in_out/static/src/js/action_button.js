@@ -17,18 +17,24 @@ odoo.define("sh_pos_cash_in_out.ActionButton", function (require) {
     class CashInOutButton extends PosComponent {
         constructor() {
             super(...arguments);
+            
             useListener("click-cash-control", this.onClickTemplateLoad);
         }
         
         
         onClickTemplateLoad() {
-            let { confirmed, payload } = this.showPopup("CashInOutOptionPopupWidget");
-            if (confirmed) {                
 
-            } else {
-                return;
-            }
+            let { confirmed, payload } = this.showPopup("CashInOutOptionPopupWidget");            
+                if (confirmed) {                
+
+                } else {
+                    return;
+                }
+
         }
+        
+        
+        
     }
     
     
@@ -47,25 +53,15 @@ odoo.define("sh_pos_cash_in_out.ActionButton", function (require) {
             useListener("click-cash-in-out-statement", this.onClickTemplateLoad);
         }
         async onClickTemplateLoad() {
-        	var self = this
+            var self = this
+            alert('Este boton abre los reportes');
             let { confirmed, payload } = this.showPopup("CashInOutOptionStatementPopupWidget");
             if (confirmed) {
             } else {
                 return;
-            }
+            }                                
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     CashInOutStatementButton.template = "CashInOutStatementButton";

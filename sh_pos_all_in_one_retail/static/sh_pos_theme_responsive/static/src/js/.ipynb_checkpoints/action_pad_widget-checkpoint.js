@@ -17,6 +17,13 @@ odoo.define("sh_pos_theme_responsive.action_pad_widget", function (require) {
             
             
             async on_slide_icon(event) {
+                
+                
+            const { confirmed, payload: inputPin } = await this.showPopup('NumberPopup', {
+                isPassword: true,
+                title: this.env._t('Password ?'),
+                startingValue: null,
+                });
                     var self = this;
                     $("div.numpad").slideToggle("slow", function(){
                         if($('.slide_toggle_button').find('.fa')){

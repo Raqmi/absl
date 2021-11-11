@@ -30,6 +30,12 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
                 return;
             }
         }
+        
+        
+        
+        
+        
+        
         click_cash_out_button(){
         	var self = this;
         	self.env.pos.cash_in_out_options = "cash_out"
@@ -39,6 +45,11 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
                 return;
             }
         }
+        
+        
+        
+        
+        
         click_set_closing_button(){
         	let { confirmed, payload } = this.showPopup("SetClosingVBalancePopupWidget");
             if (confirmed) {
@@ -46,6 +57,10 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
                 return;
             }
         }
+        
+        
+        
+        
         click_payments(){
         	let { confirmed, payload } = this.showPopup("TransactionPopupWidget");
             if (confirmed) {
@@ -53,6 +68,12 @@ odoo.define("sh_pos_cash_in_out.Popup", function (require) {
                 return;
             }
         }
+        
+        
+        
+        
+        
+        
     }
 
     
