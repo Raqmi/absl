@@ -8,11 +8,11 @@ from odoo import fields, models, api
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    pos_user_type = fields.Selection([('cashier', 'Cajero Mayoreo/Supervisor POS'), ('salesman', 'Vendedor mostrador de mayoreo')], string="Tipo de usuario Mayoreo",default='salesman')
+    pos_user_type = fields.Selection([('cashier', 'Cajero Mayoreo'), ('salesman', 'Vendedor mostrador de mayoreo'), ('manager', 'Supervisor POS'), ('POS', 'Operador POS')], string="Tipo de usuario Abarrotes San Luis",default='salesman')
     can_give_discount = fields.Boolean("Puede dar descuento")
     can_change_price = fields.Boolean("Puede cambiar precio")
     discount_limit = fields.Float("Limite de descuento")
-    based_on = fields.Selection([('pin', 'Pin'), ('barcode', 'Barcode')],default='pin', string="Autentificar al gerente con: ")
+    based_on = fields.Selection([('pin', 'Pin'), ('barcode', 'Barcode')],default='pin', string="Autorizar a este usuario con : ")
     sales_persons = fields.Many2many('res.users', 'sales_person_rel', 'sales_person_id', 'user_id',string='Vendedores')
     custom_security_pin = fields.Char(string="Pin de seguridad")
 
