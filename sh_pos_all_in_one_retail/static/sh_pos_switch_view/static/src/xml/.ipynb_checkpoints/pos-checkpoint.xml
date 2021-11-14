@@ -47,12 +47,28 @@
                                     <t t-if="env.pos.config.sh_display_product_onhand">
                                         <th>On Hand</th>
                                     </t>
+                                    
+                                    
+                                    
                                     <t t-if="env.pos.config.sh_display_product_forecasted">
                                         <th>Forecasted</th>
                                     </t>
+                                    
+                                    
+                                    
                                     <t t-if="env.pos.config.sh_display_product_uom">
                                         <th>UOM</th>
                                     </t>
+                                    
+
+                                    <t t-if="env.pos.config.sinergy_display_description">
+                                        <th>Notes</th>
+                                    </t>
+                                    
+                                    
+                                    
+                                    
+                                    
                                     <t t-if="env.pos.config.sh_display_product_price">
                                         <th>Price</th>
                                     </t>
@@ -231,11 +247,32 @@
 	                    </t>
 	                </td>
 	            </t>
+                
+                
+                
 	            <t t-if="env.pos.config.sh_display_product_uom">
 	                <td>
 	                    <t t-esc="props.product.uom_id[1]" />
 	                </td>
 	            </t>
+                
+                
+                
+                
+	            <t t-if="env.pos.config.sinergy_display_description">
+                    <td>
+                        <t t-if="props.product.description">
+                            <t t-esc="props.product.description" />
+                        </t>
+                    </td>
+                </t>
+                
+                
+                
+                
+                
+                
+                
 	            <t t-if="env.pos.config.sh_display_product_price">
 	                <td>
 	                    <span class="price-tag">
@@ -347,11 +384,35 @@
 	                    </t>
 	                </td>
 	            </t>
+                
+                
+                
+                
 	            <t t-if="env.pos.config.sh_display_product_uom">
 	                <td>
 	                    <t t-esc="props.product.uom_id[1]" />
 	                </td>
 	            </t>
+                
+                
+                
+                
+                
+                
+	            <t t-if="env.pos.config.sinergy_display_description">
+                    <td>
+                        <t t-if="props.product.description">
+                            <t t-esc="props.product.description" />
+                        </t>
+                    </td>
+                </t>
+
+                
+                
+                
+                
+                
+                
 	            <t t-if="env.pos.config.sh_display_product_price">
 	                <td>
 	                    <span class="price-tag">
