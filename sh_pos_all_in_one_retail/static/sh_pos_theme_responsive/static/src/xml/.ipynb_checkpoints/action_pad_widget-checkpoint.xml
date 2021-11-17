@@ -20,7 +20,7 @@
         <!-- ======================================================================================================= -->    
         <!-- ======================================================================================================= -->    
             
-        <t t-if="env.pos.user.pos_user_type !=='POS'">      
+        <t t-if="env.pos.user.pos_user_type == 'casher' ">      
             
 			<div class="numpad sh_product_numpad">
 				<button class="input-button number-char" t-on-click="sendInput('1')">1</button>
