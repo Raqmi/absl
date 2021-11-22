@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="assets_backend" name="i_pos_stock assets"
+		inherit_id="point_of_sale.assets">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/i_pos_stock/static/src/js/pos.js" />
+			<script type="text/javascript" src="/i_pos_stock/static/src/js/popups.js" />
+			<script type="text/javascript" src="/i_pos_stock/static/src/js/Chrome.js" />
+			<script type="text/javascript"
+				src="/i_pos_stock/static/src/js/ProductsWidget.js" />
+			<script type="text/javascript"
+				src="/i_pos_stock/static/src/js/OrderListScreenWidget.js" />
+		</xpath>
+		<xpath expr="//link[@id='pos-stylesheet']" position="before">
+			<link rel="stylesheet" href="/i_pos_stock/static/src/css/pos.css" />
+		</xpath>
+	</template>
+
+	<record id="pos_stock_location_config" model="ir.ui.view">
+		<field name="name">pos.config.form.view.inherit</field>
+		<field name="model">pos.config</field>
+		<field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[@id='inventory_location']/div" position="after">
+				<div class="col-12 col-lg-6 o_setting_box" id="pos_stock_avail">
+					<div class="o_setting_left_pane">
+						<field name="display_stock_in_pos" />
+					</div>
+					<div class="o_setting_right_pane">
+						<label for="display_stock_in_pos" />
+						<div class="text-muted">
+							Display product's stock info in POS
+						</div>
+						<div class="content-group mt16">
+							<div class="row mt16">
+								<label for="hide_outofstock_prod" class="col-lg-4 o_light_label" />
+								<field name="hide_outofstock_prod" />
+							</div>
+							<div class="row mt16">
+								<label for="stock_type" class="col-lg-4 o_light_label" />
+								<field name="stock_type" />
+							</div>
+							<div class="row mt16">
+								<label for="allow_order" class="col-lg-4 o_light_label" />
+								<field name="allow_order" />
+							</div>
+							<div class="row mt16" attrs="{'invisible' :[('allow_order','=',True)] }">
+								<label for="custom_msg" class="col-lg-4 o_light_label" />
+								<field name="custom_msg" />
+							</div>
+							<div class="row mt16" attrs="{'invisible' :[('allow_order','=',True)] }">
+								<label for="deny_order" class="col-lg-4 o_light_label" />
+								<field name="deny_order" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</xpath>
+			
+			<xpath expr="//div[@id='inventory_location']" position="after">
+				<h2 name="stock_location_qty">Stock Location Configuration</h2>
+				<div class="row mt16 o_settings_container" id="stock_location_qty">
+					<div class="col-xs-12 col-lg-6 o_setting_box">
+						<div class="o_setting_right_pane">
+							<label for="select_location_type" string="Stock location" />
+							<div class="text-muted">
+								Product stock location
+							</div>
+							<div class="content-group">
+								<div class="mt16">
+									<field name="select_location_type" class="o_light_label"
+										widget="radio" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-lg-6 o_setting_box"
+						attrs="{'invisible' :[('select_location_type','=','all')] ,'required' : [('select_location_type','=','specific')]}">
+						<div class="o_setting_right_pane">
+							<label for="select_location_id" />
+							<div class="text-muted">
+								Stock location used for the inventory
+							</div>
+							<div class="content-group">
+								<div class="mt16">
+									<field name="select_location_id" class="o_light_label"
+										domain="[('usage','=','internal')]" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</xpath>
+		</field>
+	</record>
+</odoo>

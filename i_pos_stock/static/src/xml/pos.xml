@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="pos_stock_location_template" inherit_id="point_of_sale.template" xml:space="preserve">
+    
+    <t t-name="ProductItemCustom" t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('price-tag')]" position="before">
+	        <t t-if="env.pos.config.display_stock_in_pos &amp;&amp; props.product.type === 'product'">
+                <t t-if="env.pos.config.hide_outofstock_prod">
+                	<t t-if="env.pos.config.select_location_type === 'all'">
+		                <t t-if="env.pos.config.stock_type === 'qty_available' &amp;&amp; props.product.qty_available gt env.pos.config.deny_order">
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="qty-tag">
+		                    	<t t-if="env.pos.config.stock_type === 'qty_available'">
+		                    		<t t-esc="props.product.rounded_qty()" />
+		                    	</t>
+		                	</span>
+		                </t>
+		                
+		                <t t-if="env.pos.config.stock_type === 'forecasted_qty' &amp;&amp; props.product.virtual_available gt env.pos.config.deny_order">
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="qty-tag">
+		                    	<t t-if="env.pos.config.stock_type === 'forecasted_qty'">
+		                    		<t t-esc="props.product.virtual_available" />
+		                    	</t>
+		                	</span>
+		                </t>
+		                
+		                <t t-if="env.pos.config.stock_type === 'onhand_minus_out' &amp;&amp; (props.product.qty_available - props.product.outgoing_qty) gt env.pos.config.deny_order" >
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="qty-tag">
+		                    	<t t-if="env.pos.config.stock_type === 'onhand_minus_out'">
+		                    		<t t-esc="props.product.rounded_qty() - props.product.outgoing_qty" />
+		                    	</t>
+		                	</span>
+		                </t>
+	                </t>
+	                <t t-else="">
+	                	<span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="{{ env.pos.db.product_stock_qtys[props.product.id] lte env.pos.config.deny_order ? 'qty-tag not-available' : 'qty-tag' }}">
+			            	<t t-esc="env.pos.db.product_stock_qtys[props.product.id]" />
+		                </span>
+	                </t>
+                </t>
+                
+                <t t-else="">
+	                <t t-if="env.pos.config.select_location_type === 'all'">
+	                	<t t-if="env.pos.config.stock_type === 'qty_available'">
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="{{ props.product.qty_available lte env.pos.config.deny_order ? 'qty-tag not-available' : 'qty-tag' }}">
+			                    <t t-if="env.pos.config.stock_type === 'qty_available'">
+				                    		<t t-esc="props.product.rounded_qty()" />
+			                   	</t>
+			                </span>
+		                </t>
+		                <t t-if="env.pos.config.stock_type === 'forecasted_qty'">
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="{{ props.product.virtual_available lte env.pos.config.deny_order ? 'qty-tag not-available' : 'qty-tag' }}">
+			                   	<t t-if="env.pos.config.stock_type === 'forecasted_qty'">
+			                   		<t t-esc="props.product.virtual_available" />
+			                   	</t>
+			                </span>
+		                </t>
+		                <t t-if="env.pos.config.stock_type === 'onhand_minus_out'">
+			                <span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="{{ (props.product.qty_available - props.product.outgoing_qty) lte env.pos.config.deny_order ? 'qty-tag not-available' : 'qty-tag' }}">
+			                   	<t t-if="env.pos.config.stock_type === 'onhand_minus_out'">
+			                   		<t t-esc="props.product.rounded_qty() - props.product.outgoing_qty" />
+			                   	</t>
+			                </span>
+		                </t>
+	                </t>
+	                <t t-else="">
+	                	<span t-attf-id="qty-tag-{{ props.product.id }}" t-attf-class="{{ env.pos.db.product_stock_qtys[props.product.id] lte env.pos.config.deny_order ? 'qty-tag not-available' : 'qty-tag' }}">
+			            	<t t-esc="env.pos.db.product_stock_qtys[props.product.id]" />
+		                </span>
+	                </t>
+                </t>
+            </t>
+        </xpath>
+    </t>
+    
+    <t t-name="OrderWidget" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension" owl="1">
+    	<xpath expr="//div[hasclass('order')]/t[2]/OrderSummary" position="after">
+    		<div class="total-items clearfix">
+	            <div class="line">
+	                <div class="entry total">
+	                    <span class="badge">Numero de productos: </span>
+	                    <t t-set="sum_qty" t-value="0" />
+	                    <t t-foreach="orderlinesArray" t-as="orderline">
+                            <t t-set="sum_qty" t-value="sum_qty + orderline.quantity" />
+                        </t>
+	                    <span class="value">
+	                        <t t-esc="sum_qty" />
+	                    </span>
+	                </div>
+	            </div>
+	        </div>
+    	</xpath>
+    </t>
+    
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+    	<xpath expr="//t[@t-foreach='receipt.orderlines']/t[2]/div[hasclass('pos-receipt-left-padding')]" position="replace" >
+    	
+    	</xpath>
+    	<xpath expr="//t[@t-foreach='receipt.orderlines']/t[@t-if='isSimple(line)']/div/t" position="after">
+    		<span t-esc="env.pos.get_QtyStr(line.quantity)" class="pos-receipt-center-align" style="padding-left: 60px;" />
+    	</xpath>
+    	<xpath expr="//t[@t-foreach='receipt.orderlines']/t[2]/div" position="replace">
+    		<div>
+    			<span t-esc="line.product_name_wrapped[0]" class="pos-receipt-left-align" />
+	    		<span t-esc="env.pos.get_QtyStr(line.quantity)" class="pos-receipt-center-align" style="padding-left: 60px;" />
+	    		<span t-esc="env.pos.format_currency_no_symbol(line.price_display)" class="price_display pos-receipt-right-align"/>
+    		</div>
+    	</xpath>
+    	<xpath expr="//t[@t-foreach='receipt.orderlines']/t[2]/t[1]" position="before">
+    		<br></br>
+    	</xpath>
+    	<xpath expr="//div[hasclass('before-footer')]" position="before">
+    		<div>
+				<t t-set="sum_qty" t-value="0" />
+                <t t-foreach="receipt.orderlines" t-as="line">
+                	<t t-set="sum_qty" t-value="sum_qty + line.quantity" />
+                </t>
+              	Numero de productos:
+              	<span t-esc="sum_qty" class="pos-receipt-right-align"/>
+          	</div>
+    	</xpath>
+    </t>
+	
+    <t t-name="OutOfStockPopupMessage" owl="1">
+	    <div class="modal-dialog" role="dialog">
+            <div class="popup popup-selection ">
+                <p class="title icon-title"><t t-esc="props.title" /></p>
+                <div class='selection scrollable-y touch-scrollable'>
+                    <p class="body" style="height:100px !important">
+                   		<t t-esc="props.body" />
+              			</p>
+                </div>
+                <div class="footer">
+                    <div class="button cancel icon-cancel" t-on-click="confirm">
+                        <t t-esc="props.confirmText" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </t>
+    <t t-name="LowStockProductsButton" owl="1">
+	<!--
+        <div class="ticket-button" t-on-click="onClickStock">
+            <div class="with-badge">
+                <i class="fas fa-inventory"></i>
+            </div>
+            <div>Low Stock Product List</div>
+        </div>
+	-->	
+    </t>
+    
+    <t t-name="ChromeCustom2" t-inherit="point_of_sale.Chrome" t-inherit-mode="extension" owl="1">
+    	<xpath expr="//div[hasclass('pos-rightheader')]/div[hasclass('search-bar-portal')]" position="after">
+    		<LowStockProductsButton></LowStockProductsButton>
+    	</xpath>
+    </t>
+    
+    <t t-name="LowStockProductsScreen" owl="1">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <div class="top-content">
+                    <div class='button back' t-on-click="back">
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </div>
+                    
+					<div class="searchbox-client top-content-center">
+                        <input placeholder="Search Products" type="text" id="search-products" size="1" t-on-keyup="updateProductList"/>
+                        <span class="search-clear-order"></span>
+                    </div>
+                </div>
+                <section class="full-content">
+                    <div class="client-window">
+                        <section class="subwindow list">
+                            <div class="subwindow-container">
+                                <div class="subwindow-container-fix scrollable-y">
+                                    <table class="client-list" id="client-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="client-list-contents">
+                                        	<t t-set="products" t-value="props.products" />
+                                            <t t-foreach="products || []" t-as="product" t-key="product.id">
+                                            	<tr class='order-line' t-att-data-id='product.id'>
+										            <td><t t-esc='product.display_name' /></td>
+										            <td><t t-esc='product.qty_available' /></td>
+										        </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+</templates>
