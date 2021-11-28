@@ -196,7 +196,7 @@
                             <tr>
                                 <th class="text-left" width="33.3%">Importe</th>
                                 <th class="text-center" width="33.3%">Pagado</th>
-                                <th class="text-right" width="33.3%">Por pagar</th>
+                                <th class="text-right" width="33.3%">Cambio</th>
                             </tr>
                         </thead>
                         <tbody>
