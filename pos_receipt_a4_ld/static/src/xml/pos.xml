@@ -113,9 +113,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Description</th>
-                                
-                                <th class="text-center">Barcode</th>
+                                <th>Description</th>                               
                                 <th class="text-center">Quantity</th>
                                 <th class="text-right">Price</th>
                                 <th t-if="receipt.total_discount" class="text-right">Discount %</th>
@@ -131,8 +129,6 @@
                                         <WrappedProductNameLines line="line"/>
                                         <!--                                        <t t-call="OrderReceiptWrappedProductNameLines"/>-->
                                     </td>
-
-                                    <td class="text-center"><t t-esc='line.barcode'/>                                    
                                     <td class="text-center"><t t-esc='line.quantity'/>
                                         <t t-esc='line.unit_name'/></td>
                                     <td class="text-right"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
